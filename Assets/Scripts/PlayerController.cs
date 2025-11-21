@@ -6,12 +6,13 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     [Header("Movimento")]
-    [SerializeField] private float moveSpeed = 10f;
+    [SerializeField] private float moveSpeed = 5f;
 
     [Header("Combate")]
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform firePoint;
-    [SerializeField] private float fireRate = 0.5f;
+    [SerializeField] private float fireRate = 0.1f; // Tiro normal mais rápido
+    [SerializeField] private float specialFireRate = 0.1f; // Tiro especial mais lento
 
     [Header("Audio")]
     [SerializeField] private AudioClip shootSFX;
@@ -19,7 +20,10 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody rb;
     private Vector2 movementInput;
+
+    // Timestamps para controlar os cooldowns separadamente
     private float nextFireTime = 0f;
+    private float nextSpecialFireTime = 0f;
 
     void Awake()
     {
@@ -29,25 +33,30 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        // 1. Leitura de Movimento
+        // 1. Movimento e Rotacao (Mantido igual)
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveZ = Input.GetAxisRaw("Vertical");
 
         movementInput = new Vector2(moveX, moveZ).normalized;
 
-        // 2. Rota��o (8 Dire��es)
         if (movementInput != Vector2.zero)
         {
             Vector3 lookDirection = new Vector3(movementInput.x, 0f, movementInput.y);
-            Quaternion targetRotation = Quaternion.LookRotation(lookDirection, Vector3.up);
-            transform.rotation = targetRotation;
+            transform.rotation = Quaternion.LookRotation(lookDirection, Vector3.up);
         }
 
-        // 3. Disparo
+        // 2. Disparo Normal (Botao Esquerdo / Ctrl)
         if (Input.GetButton("Fire1") && Time.time >= nextFireTime)
         {
             Shoot();
             nextFireTime = Time.time + fireRate;
+        }
+
+        // 3. Disparo Especial (Botao Direito / Alt) <--- NOVO
+        if (Input.GetButton("Fire2") && Time.time >= nextSpecialFireTime)
+        {
+            SpecialShoot();
+            nextSpecialFireTime = Time.time + specialFireRate;
         }
     }
 
@@ -60,42 +69,55 @@ public class PlayerController : MonoBehaviour
 
     void Shoot()
     {
-        if (bulletPrefab != null && firePoint != null)
-        {
-            Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        if (bulletPrefab == null || firePoint == null) return;
 
-            // Toca o som
-            if (audioSource != null && shootSFX != null)
-            {
-                audioSource.PlayOneShot(shootSFX);
-            }
+        // Tiro simples para frente
+        Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        PlayShootSound();
+    }
+
+    // --- NOVO MÉTODO: O TIRO EM 4 DIREcoES ---
+    void SpecialShoot()
+    {
+        if (bulletPrefab == null || firePoint == null) return;
+
+        // Array com os angulos desejados relativos a frente da nave
+        float[] angles = { 0f, 45f, -45f, 180f };
+
+        foreach (float angle in angles)
+        {
+            // Quaternion.Euler(x, y, z) cria uma rotacao baseada em graus.
+            // Multiplicamos a rotacao ATUAL da nave pela rotacao do DESVIO.
+            Quaternion rotationOffset = Quaternion.Euler(0f, angle, 0f);
+            Quaternion finalRotation = transform.rotation * rotationOffset;
+
+            Instantiate(bulletPrefab, firePoint.position, finalRotation);
+        }
+
+        PlayShootSound();
+    }
+
+    void PlayShootSound()
+    {
+        if (audioSource != null && shootSFX != null)
+        {
+            audioSource.PlayOneShot(shootSFX);
         }
     }
 
-    // --- SISTEMA DE DANO ---
-
-    // Chamado quando o inimigo encosta fisicamente (Colis�o)
+    // --- SISTEMA DE DANO (Mantido igual) ---
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            Die();
-        }
+        if (collision.gameObject.CompareTag("Enemy")) Die();
     }
 
-    // Chamado quando a BALA do inimigo acerta (Trigger)
     public void TakeDamage()
     {
         Die();
     }
 
-    // A FUN��O QUE FALTAVA
     void Die()
     {
-        Debug.Log("GAME OVER! Reiniciando...");
-
-        // Reinicia a cena atual
-        Scene currentScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(currentScene.buildIndex);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

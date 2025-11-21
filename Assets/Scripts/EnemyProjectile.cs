@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyProjectile : MonoBehaviour
 {
     [SerializeField] private float speed = 15f;
-    [SerializeField] private float damage = 1f;
+    //[SerializeField] private float damage = 1f;
     private Rigidbody rb;
 
     void Start()

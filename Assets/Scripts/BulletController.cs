@@ -9,20 +9,20 @@ public class BulletController : MonoBehaviour
 
 	void Start() // Start roda uma vez, logo antes do primeiro Update
 	{
-		// Destroy agendado: Remove o objeto da memória após 3 segundos
-		// Isso evita vazar memória com milhares de tiros voando para o infinito.
+		// Destroy agendado: Remove o objeto da memoria apos 3 segundos
+		// Isso evita vazar memoria com milhares de tiros voando para o infinito.
 		Destroy(gameObject, lifeTime);
 	}
 
 	void Update()
 	{
-		// Move o tiro para "Frente" (Eixo Z positivo local) e não global
+		// Move o tiro para "Frente" (Eixo Z positivo local) e noo global
 		// Space.Self garante que se girarmos o tiro, ele vai para a frente dele
 		transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
 	}
 
-	// Detectar colisão (veremos no próximo passo)
-	// Callback mágico da Unity: Dispara quando o Collider (Trigger) toca em outro Collider
+	// Detectar colisoo (veremos no proximo passo)
+	// Callback mogico da Unity: Dispara quando o Collider (Trigger) toca em outro Collider
 	void OnTriggerEnter(Collider other)
 	{
 		// --- LINHA DE DEBUG NOVA ---

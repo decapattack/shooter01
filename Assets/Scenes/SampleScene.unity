@@ -574,7 +574,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1594966918958916720, guid: 71af6b2eaee7a0141979b19788e5ff03,
     type: 3}
   firePoint: {fileID: 1383709476}
-  fireRate: 0.1
+  fireRate: 0.03
   shootSFX: {fileID: 8300000, guid: e79743ef53be7d6409ff8251ce74af59, type: 3}
 --- !u!54 &355625515
 Rigidbody:

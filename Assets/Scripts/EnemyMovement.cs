@@ -5,7 +5,6 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     // Start is called before the first frame update
-    {
     [Header("Configuração")]
     [SerializeField] private float speed = 3.5f; // Velocidade de perseguição
     [SerializeField] private float stopDistance = 5f; // Para ele não colar em você (Fica atirando de longe)

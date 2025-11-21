@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     [Header("Movimento")]
-    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float moveSpeed = 10f;
 
     [Header("Combate")]
     [SerializeField] private GameObject bulletPrefab;
@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
 
         movementInput = new Vector2(moveX, moveZ).normalized;
 
-        // 2. Rotação (8 Direções)
+        // 2. Rotaï¿½ï¿½o (8 Direï¿½ï¿½es)
         if (movementInput != Vector2.zero)
         {
             Vector3 lookDirection = new Vector3(movementInput.x, 0f, movementInput.y);
@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
 
     // --- SISTEMA DE DANO ---
 
-    // Chamado quando o inimigo encosta fisicamente (Colisão)
+    // Chamado quando o inimigo encosta fisicamente (Colisï¿½o)
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
         Die();
     }
 
-    // A FUNÇÃO QUE FALTAVA
+    // A FUNï¿½ï¿½O QUE FALTAVA
     void Die()
     {
         Debug.Log("GAME OVER! Reiniciando...");

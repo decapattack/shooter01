@@ -1,0 +1,82 @@
+# ====================================
+# Unity generated files
+# ====================================
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+
+# Crash Reports
+sysinfo.txt
+
+# ====================================
+# Unity cache
+# ====================================
+# Asset meta data should be tracked
+# But huge cache directories should not
+/[Uu]ser[Ss]ettings/
+
+# ====================================
+# OS / Editor
+# ====================================
+.DS_Store
+.DS_Store?
+ehthumbs.db
+[Tt]humbs.db
+
+# ====================================
+# Visual Studio / VSCode
+# ====================================
+.vscode/
+.vs/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# ====================================
+# Auto-generated
+# ====================================
+ExportedObj/
+.consulo/
+*.orig
+*.mdb
+*.pdb
+*.opendb
+*.VC.db
+
+# ====================================
+# Builds
+# ====================================
+*.apk
+*.aab
+*.app
+*.xcodeproj
+*.xcworkspace
+
+# ====================================
+# Packages (cache only)
+# ====================================
+/Packages/*-lock.json
+
+# Ignore only Cache folder inside Packages
+/[Pp]ackages/manifest.json
+/[Pp]ackages/packages-lock.json
+
+# ====================================
+# Addressables
+# ====================================
+/[Aa]sset[Bb]undles/

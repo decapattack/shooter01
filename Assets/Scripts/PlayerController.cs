@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     [Header("Movimento")]
-    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float moveSpeed = 15f;
 
     [Header("Combate")]
     [SerializeField] private GameObject bulletPrefab;
@@ -69,29 +69,44 @@ public class PlayerController : MonoBehaviour
 
     void Shoot()
     {
-        if (bulletPrefab == null || firePoint == null) return;
+        // Removemos a checagem de 'bulletPrefab' pois o Player não precisa mais saber dele
+        if (firePoint == null) return;
 
-        // Tiro simples para frente
-        Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        // Verificação de segurança caso esqueça de colocar o Manager na cena
+        if (BulletPool.Instance == null) return;
+
+        // 1. Pega a bala configurada para o Player (Azul) direto da piscina
+        BulletController bullet = BulletPool.Instance.GetPlayerBullet();
+
+        // 2. Posiciona onde deve nascer
+        bullet.transform.position = firePoint.position;
+        bullet.transform.rotation = firePoint.rotation;
+
         PlayShootSound();
     }
 
     // --- NOVO MÉTODO: O TIRO EM 4 DIREcoES ---
     void SpecialShoot()
     {
-        if (bulletPrefab == null || firePoint == null) return;
+        if (firePoint == null) return;
+        if (BulletPool.Instance == null) return;
 
-        // Array com os angulos desejados relativos a frente da nave
+        // Definição dos ângulos extras
         float[] angles = { 0f, 45f, -45f, 180f };
 
         foreach (float angle in angles)
         {
-            // Quaternion.Euler(x, y, z) cria uma rotacao baseada em graus.
-            // Multiplicamos a rotacao ATUAL da nave pela rotacao do DESVIO.
+            // Cálculo da rotação (Matemática de Quaternions)
             Quaternion rotationOffset = Quaternion.Euler(0f, angle, 0f);
             Quaternion finalRotation = transform.rotation * rotationOffset;
 
-            Instantiate(bulletPrefab, firePoint.position, finalRotation);
+            // 1. Pega uma NOVA bala do pool para cada direção do loop
+            // Isso é extremamente rápido e não gera lixo de memória (GC)
+            BulletController bullet = BulletPool.Instance.GetPlayerBullet();
+
+            // 2. Posiciona com a rotação calculada
+            bullet.transform.position = firePoint.position;
+            bullet.transform.rotation = finalRotation;
         }
 
         PlayShootSound();

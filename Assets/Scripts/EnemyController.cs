@@ -44,13 +44,13 @@ public class EnemyController : MonoBehaviour
 
     void Shoot()
     {
-        if (enemyBulletPrefab != null)
-        {
-            // Cria a bala na posiaao do inimigo e com a rotaaao do inimigo.
-            // Como o script de movimento ja faz o inimigo olhar para o Player,
-            // a bala saira na direaao certa.
-            Instantiate(enemyBulletPrefab, transform.position, transform.rotation);
-        }
+        if (BulletPool.Instance == null) return;
+
+        // USA O MÉTODO ESPECÍFICO PARA INIMIGOS
+        BulletController bullet = BulletPool.Instance.GetEnemyBullet();
+
+        bullet.transform.position = transform.position;
+        bullet.transform.rotation = transform.rotation;
     }
 
     // --- LaGICA DE DANO E MORTE ---

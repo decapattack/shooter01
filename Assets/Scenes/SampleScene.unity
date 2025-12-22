@@ -571,8 +571,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  bulletPrefab: {fileID: 1594966918958916720, guid: 71af6b2eaee7a0141979b19788e5ff03,
-    type: 3}
+  bulletPrefab: {fileID: 0}
   firePoint: {fileID: 1383709476}
   fireRate: 0.03
   specialFireRate: 0.05
@@ -1105,6 +1104,54 @@ Transform:
   m_Children: []
   m_Father: {fileID: 355625519}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1386413373
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1386413375}
+  - component: {fileID: 1386413374}
+  m_Layer: 0
+  m_Name: MANAGERS
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1386413374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1386413373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3889a1344459014b8c52c8921b44b71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerBulletPrefab: {fileID: 4369477845619834509, guid: 71af6b2eaee7a0141979b19788e5ff03,
+    type: 3}
+  enemyBulletPrefab: {fileID: 7785821666673219459, guid: 08c7e41ccd922ed47baf5f1a84331f5a,
+    type: 3}
+--- !u!4 &1386413375
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1386413373}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.17310166, y: 0.024365187, z: 0.17176819}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1576447986
 GameObject:
   m_ObjectHideFlags: 0
@@ -1272,3 +1319,4 @@ SceneRoots:
   - {fileID: 2050587991}
   - {fileID: 1576447988}
   - {fileID: 308964617}
+  - {fileID: 1386413375}

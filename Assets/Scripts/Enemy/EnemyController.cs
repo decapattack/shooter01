@@ -6,6 +6,7 @@ public class EnemyController : MonoBehaviour
 {
     [Header("Estatasticas")]
     [SerializeField] private int maxHealth = 3;
+    [SerializeField] private int scoreValue = 100; // <--- NOVO
     private int currentHealth;
 
     [Header("Ataque")]
@@ -86,6 +87,11 @@ public class EnemyController : MonoBehaviour
         if (explosionPrefab != null)
         {
             Instantiate(explosionPrefab, transform.position, transform.rotation);
+        }
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.AddScore(scoreValue);
         }
 
         // 3. Destruiaao do Objeto

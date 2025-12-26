@@ -133,6 +133,16 @@ public class PlayerController : MonoBehaviour
 
     void Die()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        // Desativa o player visualmente
+        gameObject.SetActive(false);
+
+        // Cria efeito de explosão se tiver (opcional)
+        // Instantiate(explosionPrefab, transform.position, transform.rotation);
+
+        // Notifica o Manager para iniciar o processo de fim de jogo
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.TriggerGameOver();
+        }
     }
 }
